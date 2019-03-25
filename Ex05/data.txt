@@ -1,0 +1,10 @@
+SPIM/SAL is a port, to the Apple Macintosh Personal Computer, of SPIM,
+a MIPS R2000/3000 simulator that was written by James Larus for
+instructional use at the University of Wisconsin Computer Sciences
+Departement. Three other versions of SPIM exist: a character-cell
+terminal version for Unix called "spim", an X windows version for
+Unix called "xspim", and a version for PC's running WIN32S, also
+called "SPIM/SAL." These versions are not identical, but they are
+descended from a common ancestor and offer the same general
+functionality. See the end of this document for information about
+obtaining the different versions of SPIM.

@@ -1,0 +1,10 @@
+std1ss32
+std1tc9
+std2tc14
+std3dc1
+std3tc12
+hdw3dc2
+std4tc50
+std5dc32
+std6dc22
+u-aizu

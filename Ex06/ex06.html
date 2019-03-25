@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="../ex.css" rel="stylesheet" type="text/css">
+  <title>Programming C ex06</title>
+</head>
+
+<body>
+
+<h1>プログラミングＣ<BR>第６回 演習問題</h1>
+
+
+<table noborder="" align="center" width="60%">
+  <tbody>
+    <tr>
+      <td width="40%">
+      <div class="basic" align="center">
+      <a href="#prog01">問題１</a>
+      <a href="#prog02">問題２</a>
+      </div>
+      </td>
+      <td width="30%">
+      <div class="advance" align="center">
+      <a href="#prog03">問題３</a>
+      <a href="#prog04">問題４</a>
+      <a href="#prog05">問題５</a>
+      </div>
+      </td>
+      <td width="30%">
+      <div class="bonus" align="center">
+      <a href="#prog06">問題６</a>
+      <a href="#prog07">問題７</a>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+
+<P class="section">基本問題(50点)</P>
+
+<em>今回の口頭採点対象は <em>演習問題２</em>の1問のみです。その他の問題はこれまでと同様に提出コマンドでファイルを提出してください。<BR>
+採点対象の問題を解けたら手を挙げてTA/SAまたは教員を呼び、答えを口頭で説明してください。<BR>
+その際、正しく説明できたら点数がつけられ、間違っている場合はやり直してもらいます（間違っても減点はしません）。<BR>
+なお、採点の関係上、口頭採点のファイルも提出コマンドで提出してください。 <BR></em>
+
+<DIV class="basic">
+<P class="toi"><A NAME="prog01">演習問題１</a></P>
+値渡しとアドレス渡しの違いを確認する。<BR>
+変数の内容を交換するための関数 swap を作成し、利用したい。
+以下のようなプログラムを作成したが、正しく動作しない。<br>
+<OL>
+  <LI>まず、アドレス渡しを利用することで正しく動作するように修正しなさい。
+  <LI>次に、変数のアドレスが関数に正しく渡されているか
+確認する方法を考え、プログラムを拡張しなさい。<br>
+</OL>
+上記1と2の修正・拡張を施した最終的なプログラムを提出すること(提出ファイル名: <em>prog01.c</em>)<br>
+
+<pre CLASS="skel">
+#include &lt;stdio.h&gt;
+void swap(int , int );
+
+int main()
+{
+  int x = 777, y = 121;
+  printf("start: x=%d\ty=%d\n", x, y);
+  swap(x, y);
+  printf("end: x=%d\ty=%d\n", x, y);
+  
+  return 0;
+}
+
+void swap(int p, int q)
+{
+  int temp;
+
+  printf("p=%d\t q=%d\n",p,q);
+  temp = p;
+  p = q;  
+  q = temp; 
+  printf("p=%d\t q=%d\n",p,q);
+}
+</pre>
+</DIV>
+
+
+
+<DIV class="basic">
+<P class="toi"><A NAME="prog02">演習問題２</a></P>
+好きな野菜を尋ね、入力に従って、英文
+ 「<EM>[野菜名]</EM> is your favorite vegetable!」 を
+出力するプログラムを考える。
+野菜の名前は全て小文字で文字列の配列としてあらかじめ
+与えておくが、出力の際は正しい英文になるように最初の文字は
+大文字にしたい（実行例参照）。
+また、英文の出力は野菜名の文字列を引数とした関数<code>printFavoriteVegetable</code>内で
+行うこととする。
+<BR>
+
+<pre>
+[実行例]
+% <font color="RED">./a.out</font>
+Suppose that we now have (0) tomate, (1) cabbage, (2) eggplant.
+Which do you like?
+Input 0, 1, or 2: <font color="RED">1</font>
+Cabbage is your favorite vegetable!
+%
+</pre><BR><BR>
+
+以下に示すプログラムの空欄を埋めて完成させよ。(提出ファイル名: <em>prog02.c</em>)<br>
+
+<pre CLASS="skel">
+#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt; /* 関数toupperを使うため */
+
+void printFavoriteVegetable(____________);
+
+int main() {
+  char *vegetables[]={"tomate", "cabbage", "eggplant"};
+  int i;
+
+  printf("Suppose that we now have (0) %s, (1) %s, (2) %s.\n",
+                                    vegetables[0],vegetables[1],vegetables[2]);
+  printf("Which do you like?\n");
+  printf("Input 0, 1, or 2: ");
+  scanf("%d",&i);
+  
+  if(0 <= i && i <= 2) { /* i が 0-2 の範囲になければエラーを避けるため何もしない */
+    printFavoriteVegetable(____________);
+  }  
+  return 0;
+}
+
+void printFavoriteVegetable(____________favoritevegetable) {
+  
+  printf(____________,toupper(____________)); /* 最初の文字を大文字で出力 */
+  printf("%s",____________); /* 二文字目以降を出力 */
+  printf(" is your favorite vegetable!\n");
+  
+}
+
+</pre>
+
+<div class="chu2">
+<EM>ヒント</EM><BR>
+ハンドアウトのLec06-9, -10とLec05-17を参考にすること
+</div>
+
+</DIV>
+
+
+<P class="section">応用問題(50点)</P>
+
+<DIV class="advance">
+<P class="toi"><A NAME="prog03">演習問題３</a></P>
+コマンドラインから複数の文字列が入力されたとき、その文字列から数字を取り除いた文字列を表示するプログラムを、以下の方針に基づいて作成せよ。<br>
+(提出ファイル名: <em>prog03.c</em>)<br>
+
+<UL>
+  <LI>文字列毎にその都度メモリを動的に確保し、そこに文字列をコピーし、
+    処理を行う。なお、一つの文字列に対して確保する領域は一つだけとする
+    （その際確保するバイト数に注意せよ。Lec 4-11〜を参照）
+  <LI>元の文字列から大文字を取り除く処理は、関数<code>int delnum(char *)</CODE>
+  を作成し、使用する。この関数の仕様は以下の通りとする
+  <UL>
+    <LI>文字配列を受け取り、入っている文字列から数字を取り除き、前に詰めた文字列をその文字配列に入れ直す
+  <LI>戻り値は大文字を取り除いた文字列の長さ（ヌル文字を含まない文字数）とする
+  </UL>
+  <LI>処理後の文字列の表示は <CODE>main</CODE> 関数の中で行うものとする
+  <LI>表示の際、処理前と処理後の文字列の長さもあわせて表示する（実行例で括弧内に表示されている数値が文字列の長さである）
+  <LI>確保したメモリは次の文字列を処理する前に解放する
+</UL>
+
+
+<pre>
+[実行例]
+% <font color="RED">./a.out Truga001 Prog01 dvi2ps 200Yen</font>
+Truga001(8) -> Truga(5)
+Prog01(6) -> Prog(4)
+dvi2ps(6) -> dvips(5)
+200Yen(6) -> Yen(3)
+%
+</pre>
+</DIV>
+
+
+<DIV class="advance">
+<P class="toi"><A NAME="prog04">演習問題４</a></P>
+コマンドライン引数として、得点を与え、その評価値（Ａ〜Ｆ）を
+出力するプログラムを作成しなさい。ただし、得点から評価値への
+変換には、<A HREF="../ex01/ex01.html#prog03">第１回演習問題３</A>
+で作成した関数 <code>char grade_char(int score)</code>
+を利用しなさい。また、コマンドライン引数には得点はいくつ書いても良いものとし、
+引数の無い場合は何もせずに終了することとする。
+<BR>
+(提出ファイル名: <em>prog04.c</em>)<br>
+
+
+<pre>
+[実行例]
+% <font color="RED">./a.out 95 43 12 72 55</font>
+Point 95: A
+Point 43: D
+Point 12: F
+Point 72: B
+Point 55: C
+%
+</pre>
+<DIV CLASS="chu">なお、コマンドの引数は文字列であるので、
+それを得点としての整数値に変換をする必要がある。
+変換を行なうためにLec 6-14 (107ページ)で紹介された
+関数 <code><EM>atoi</EM></code> を用いると良い。
+関数 <code>atoi</code>の引数は文字ポインタ、戻り値はint型である。
+また、この関数を使用するには<code>stdlib.h</code>を<code>include</code>
+する必要がある。
+</DIV>
+</DIV>
+
+<DIV class="advance">
+<P class="toi"><A NAME="prog05">演習問題５</a></P>
+
+<A HREF="../ex04/ex04.html#prog05">第４回演習問題５</A>では、文字列のn文字目の後ろに、標準入力から入力した単語を挿入するプログラムを作成した。 
+このときは固定長の配列しか扱えなかったため、格納できる最大文字数を1023文字としていた。現在はmalloc、freeによるメモり管理の方法を習得したので、
+システムが許すかぎりの任意の長さの文字列を扱うことが出来るようになった。<p>
+
+
+
+この問題では、<A HREF="../ex04/ex04.html#prog05">第４回演習問題５</A>と同じ内容で、挿入時に文字列の長さが1023文字を超えても動作しつづける
+プログラムを作成する。ただし、一度に大きな領域を確保するのではなく、文字列を変更するたびに丁度良い大きさの新しい文字列領域を確保すること。
+さらに、使わなくなった文字列領域の開放をきちんと行うこと。また、リスト５—２を拡張する形で解答すること。
+
+<p>(提出ファイル名: <em>prog05.c</em>)</p>
+
+
+<br>
+
+<p>リスト５—１：実行例 （テスト用入力：<a href="ex06_05.in">ex06_05.in</a>、テスト用出力：<a href="ex06_05.out">ex06_05.out</a>）</p>
+<pre>
+% <em>./a.out </em>
+[Wakamatsu]
+<em>0 Aizu</em>
+[Aizu][Wakamatsu]
+<em>11 young</em>
+[Aizu][Waka[young]matsu]
+<em>23 pine</em>
+[Aizu][Waka[young]matsu[pine]]
+<em>50 openning</em>
+error
+[Aizu][Waka[young]matsu[pine]]
+<em>30 closed</em>
+[Aizu][Waka[young]matsu[pine]][closed]
+<em>0 aaa...合計１０００文字の「a」...aaa</em>
+[aaa...合計１０００文字の「a」...aaa][Aizu][Waka[young]matsu[pine]][closed]
+<em>Ctrl-D</em>
+% 
+</pre>
+<br>
+
+リスト５—２ 解答用テンプレート
+<pre class="skel">
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define BUFSIZE 1024
+
+int main(){
+  char init[]=&quot;[Wakamatsu]&quot;; /* 初期データ用文字列 */
+  char *str;
+  int n;
+  char input[BUFSIZE];       /* 入力用文字列バッファ */
+  /* その他の変数を宣言 */
+
+  /* strの初期化を記述する
+   * strlen,malloc,strcpyを使いstrにinitの内容のコピーを保持させる
+   */
+
+  while (1) {
+    printf( &quot;%s\n&quot;, str );
+    if( scanf(&quot;%d %s&quot;, &amp;n, input) != 2 ) break;
+    /*
+     * 処理の内容を記述する
+     */
+  }
+  free(str);
+  return 0;
+}
+
+
+</pre>
+
+</DIV>
+
+
+
+
+<P class="section">ボーナス問題(10点)</P>
+<DIV class="bonus">
+<P class="toi"><A NAME="prog06">演習問題６</a></P>
+これまで習った２次元配列に複数の文からなる文章を文毎に行に記憶させるとすると、
+一番文字数の多い文に合わさないといけなく、非常に無駄が多い。（図上の2次元配列を使用したパターン）<BR>
+そこでポインタ配列を使用して、それぞれの行の長さが丁度文字列の長さとなるような、行の長さがそれぞれ違う２次元配列を実現してみよう。これによって２次元配列のような無駄がなくなる。（図下の可変長2次元配列を利用したパターン）手順は以下の通り。
+<OL>
+  <LI>ファイルから一次元配列（バッファと呼ぶ）に文章を一文字づつ読む。バッファの大きさは1000バイト賭する。また、読み込むファイルは<A HREF="indata.txt">indata.txt</A>とする。
+  <LI>もしピリオド(.)が来たらその文は終わり。以下の処理をする。
+  <UL>
+    <LI>読んだ文字数＋１（ヌル文字の分）の大きさのメモリを動的確保
+    <LI>バッファにある読みこんだ文（最後にヌル文字）を確保した領域に移動
+    <LI>ポインタ配列の行数番目の要素に確保した領域のアドレス代入
+    <LI>行数カウントインクリメント
+    <LI>１に戻る
+  </UL>
+  <LI>改行は空白に置き換え
+  <LI>次の文の先頭に空白が入ってしまうので、もし出来るようなら削除する。
+  <LI>以上を繰り返す
+
+  <LI>ちゃんとうまく入ったかどうかを確認するために、最後に行ごとに出力する。
+      その際、各行の先頭にその行の文字数を表示させる。（実行例参照）
+
+</OL>
+
+テキストがピリオド毎に文として各動的一時配列に格納されたら、実行例のように
+文毎に文字数（ヌル文字含まず）と共に文を表示させる。
+(提出ファイル名: <em>prog06.c</em>)<br>
+図は以下の文章がindata.txtに入っていた場合（実際のindata.txtとは異なる）の様子である。
+実行例も示す。
+<PRE>
+[indata.txtの中身]
+You say yes. I say no.
+You say stop and 
+I say go go go.
+
+[実行結果]
+%./a.out
+ 12: You say yes.
+  9: I say no.
+ 32: You say stop and I say go go go.
+%
+</PRE>
+
+<IMG SRC="prog06.gif">
+
+</DIV>
+
+
+<DIV class="bonus">
+<P class="toi"><A NAME="prog07">演習問題７</a></P>
+集合の演算、和∪と積∩、を行うプログラムを作成しなさい。
+例として、集合Aの要素が 1, 2, 3, 4 で、集合Bの要素が 3, 4, 5 であったとすると、
+A∪Bは 1, 2, 3, 4, 5、A∩Bは 3, 4 である。
+このプログラムでは演算指定が入力で与えられ、
+その入力に合わせて処理・演算を行なう。
+入力は無限ループとし、Cntl-D が入力されると終了する。<br>
+(提出ファイル名: <em>prog07.c</em>)<br>
+<BR><BR>
+演算には次の種類がある。
+
+<ol>
+<li>代入。S を集合の名前、n を要素の数、e1, e2, ..., en を要素とすると、
+入力は S[n] = e1 e2 ... en、という文法で入ってくる。
+<pre>
+例
+% <EM>./a.out</EM>
+Input operation: <EM>A[4] = 1 2 3 4</EM>
+</pre>
+
+<li>和の演算。S | T、と入力すると S∪T を出力する。
+<pre>
+例
+% <EM>./a.out</EM>
+Input operation: <EM>A[4] = 1 2 3 4</EM>
+Input operation: <EM>B[3] = 3 4 5</EM>
+Input operation: <EM>A | B</EM>
+1 2 3 4 5
+</pre>
+
+<li>積の演算。S & T、と入力すると S∩T を出力する。
+<pre>
+例
+% <font color="RED">./a.out</font>
+Input operation: <EM>A[4] = 1 2 3 4</EM>
+Input operation: <EM>B[3] = 3 4 5</EM>
+Input operation: <EM>A & B</EM>
+3 4
+</pre>
+</ol>
+
+
+
+簡単のために以下のことを仮定する。
+<OL>
+<li>集合の名前は全てアルファベットの大文字１文字である。
+<li>集合の要素は全て正の整数であり、集合中には同じ整数は２つ以上ない。
+<li>集合の代入の際には、要素は必ず昇順（小さい数が先）に与えられる。
+<li>要素の値は最大で100である。
+<li>入力は一行につき1000文字以下である。
+<li>間違った文法の入力は入ってこない。
+</OL>
+
+<DIV CLASS="chu">注意：必ず動的メモリ割り当てを使って集合を表現すること。また、もし以前にメモリ割り当てを行ったポインタに新たに割り当てを行うときは、先にメモリを解放してから割り当てを行うこと。例えば、
+<pre>% <EM>./a.out</EM>
+Input operation: <EM>A[4] = 1 2 3 4</EM>
+Input operation: <EM>A[3] = 3 4 5</EM>
+</pre>
+のような演算が入力された場合、１番目の演算でAには <code>int</code> 型４つ分の領域を確保するが、２番目の演算で <code>int</code> 型３つ分の領域を確保する前に <code>int</code> 型４つ分の領域を解放しなければならない、ということである。
+</DIV>
+</DIV>
+
+
+<iframe src="../subinst.html" class="notice"><em>iFrameをサポートしていないブラウザです</em></iframe>
+
+
+<p class="footer" align="right">
+[ Last Updated: 2016年10月31日 by Programming C teaching group]
+</p>
+</body>
+</html>
